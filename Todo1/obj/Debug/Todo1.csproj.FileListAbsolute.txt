@@ -1,0 +1,11 @@
+C:\Users\WIN11\source\repos\Todo1\Todo1\bin\Debug\Todo1.exe.config
+C:\Users\WIN11\source\repos\Todo1\Todo1\bin\Debug\Todo1.exe
+C:\Users\WIN11\source\repos\Todo1\Todo1\bin\Debug\Todo1.pdb
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.csproj.AssemblyReference.cache
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.csproj.SuggestedBindingRedirects.cache
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.Form1.resources
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.Properties.Resources.resources
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.csproj.GenerateResource.cache
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.csproj.CoreCompileInputs.cache
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.exe
+C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.pdb

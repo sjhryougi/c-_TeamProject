@@ -1,0 +1,11 @@
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\bin\Debug\ChattingProgram.exe.config
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\bin\Debug\ChattingProgram.exe
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\bin\Debug\ChattingProgram.pdb
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.csproj.AssemblyReference.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.csproj.SuggestedBindingRedirects.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.Form1.resources
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.Properties.Resources.resources
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.csproj.GenerateResource.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.csproj.CoreCompileInputs.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.exe
+D:\Soulment\대학\응용소프트웨어실습\Chat\ChattingProgram\obj\Debug\ChattingProgram.pdb

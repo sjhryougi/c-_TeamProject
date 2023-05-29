@@ -13,7 +13,7 @@ using System.Threading;
 
 namespace ChattingProgram
 {
-    public partial class Form1 : Form
+    public partial class chat : Form
     {
         public NetworkStream m_Stream;
         public StreamReader m_Read;
@@ -29,7 +29,7 @@ namespace ChattingProgram
         public bool m_bConnect = false;
         TcpClient m_Client;
 
-        public Form1()
+        public chat()
         {
             InitializeComponent();
         }

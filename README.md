@@ -41,7 +41,7 @@ TIME - 채팅을 보낸 시간 (DATE)
 my_uid - 사용자의 uid(INT)
 
 friend_uid - 사용자 친구의 uid(INT)
-###isfriend
+### isfriend
 친구 신청 유무를 확인하기 위한 db
 
 

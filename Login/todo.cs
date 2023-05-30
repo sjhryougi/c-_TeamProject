@@ -90,6 +90,8 @@ namespace Todo1
                 RefreshToDoList();
             }*/
         }
+
+        //선택한 날짜와 선택한 사람의 todolist를 출력하는 함수
         private void RefreshToDoList()
         {
 

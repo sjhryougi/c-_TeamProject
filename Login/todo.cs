@@ -4,30 +4,40 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySql.Data.MySqlClient;
 
 namespace Todo1
 {
     public partial class todo : Form
     {
-        private Dictionary<DateTime, List<string>> todoDictionary;
-        int uid;
+        //자신의 uid와 현재 선택한 사람의 uid를 전역변수로 지정
+        int myUid;
+        int selectedUid;
+
+        //서버 연결을 위한 설정
+        MySqlConnection connection = new MySqlConnection("Server = 34.64.76.194;Database=todolist;Uid=root;Pwd=12345;");
 
         public todo(int Data)
         {
             InitializeComponent();
-            todoDictionary = new Dictionary<DateTime, List<string>>();
-            dateTimePicker.Value = DateTime.Today;
-            uid = Data;
+            connection.Open(); //서버 연결
+
+            dateTimePicker.Value = DateTime.Today; //캘린더의 날짜를 당일로 변경
+            myUid = Data; //signIn에서 넘긴 uid값을 저장
+            selectedUid = myUid; //초기에 선택한 uid는 자기 자신이다.
+            RefreshToDoList(); //todolist 실행
+
         }
 
 
+        // 캘린더로 날짜를 변경한 경우
         private void dateTimePicker_ValueChanged(object sender, EventArgs e)
         {
             RefreshToDoList();
-
         }
 
 
@@ -38,28 +48,34 @@ namespace Todo1
 
         private void addButton_Click(object sender, EventArgs e)
         {
-            string todo = todoTextBox.Text.Trim();
-            if (!string.IsNullOrEmpty(todo))
+            //본인의 todolist에만 데이터를 추가해야하기에 이를 위한 확인 절차
+            if (selectedUid == myUid)
             {
-                DateTime selectedDate = dateTimePicker.Value.Date;
-                if (todoDictionary.ContainsKey(selectedDate))
-                {
-                    todoDictionary[selectedDate].Add(todo);
-                }
-                else
-                {
-                    List<string> todoList = new List<string> { todo };
-                    todoDictionary.Add(selectedDate, todoList);
-                }
+                string todo = todoTextBox.Text;    //추가할 문자열을 todo에 저장
 
-                RefreshToDoList();
-                todoTextBox.Clear();
+                //추가할 문자열이 공백인지 확인
+                if (!string.IsNullOrEmpty(todo))
+                {
+                    string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
+
+
+                    //table에 값을 추가하기 위한 코드
+                    //string insertList = "INSERT INTO todo (my_uid, date, text, check) VALUES ('" + myUid + "','" + selectedDate + "', '" + todo + "', '" +  0 +"');";
+                    string insertList = string.Format("INSERT INTO todo (my_uid, date, text, checkTodo) VALUES ('{0}', '{1}', '{2}', '{3}');", myUid, selectedDate, todo, 0);
+                    MySqlCommand command = new MySqlCommand(insertList, connection);
+                    command.ExecuteNonQuery();
+
+
+                    RefreshToDoList();
+                    todoTextBox.Clear();
+                    // connection.Close();
+                }
             }
 
         }
 
         private void deleteButton_Click(object sender, EventArgs e)
-        {
+        {/*
             DateTime selectedDate = dateTimePicker.Value.Date;
             if (todoDictionary.ContainsKey(selectedDate))
             {
@@ -72,20 +88,25 @@ namespace Todo1
                 }
 
                 RefreshToDoList();
-            }
+            }*/
         }
         private void RefreshToDoList()
         {
+
             todoListBox.Items.Clear();
-            DateTime selectedDate = dateTimePicker.Value.Date;
-            if (todoDictionary.ContainsKey(selectedDate))
+            string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
+
+            //db에서 선택한 날짜와 uid에 맞는 데이터를 가져오기 위한 쿼리문
+            string getTodoList = string.Format("SELECT text, checkTodo FROM todo WHERE my_uid = '{0}' and date = '{1}'", selectedUid, selectedDate);
+            MySqlCommand command = new MySqlCommand(getTodoList, connection);
+            MySqlDataReader todoReader = command.ExecuteReader();
+
+            while (todoReader.Read())
             {
-                List<string> todoList = todoDictionary[selectedDate];
-                foreach (string todo in todoList)
-                {
-                    todoListBox.Items.Add(todo);
-                }
+                todoListBox.Items.Add(todoReader["text"].ToString());
             }
+            todoReader.Close();
+
         }
 
         private void todoListBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -95,7 +116,7 @@ namespace Todo1
 
         private void completeButton_Click(object sender, EventArgs e)
         {
-            DateTime selectedDate = dateTimePicker.Value.Date;
+            /*
             if (todoDictionary.ContainsKey(selectedDate))
             {
                 List<string> todoList = todoDictionary[selectedDate];
@@ -116,8 +137,8 @@ namespace Todo1
                         todoListBox.Items[selectedIndex] = completedTodo;
                     }
                 }
-            }
-        
+            }*/
+
         }
 
 
@@ -136,12 +157,8 @@ namespace Todo1
 
         }
 
-        private void friend1Button_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void friend2Button_Click(object sender, EventArgs e)
+        //보고 싶은 todolist의 사람의 이름을 선택하기 위한 combobox
+        private void cmbSelectName_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }

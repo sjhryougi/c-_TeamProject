@@ -40,8 +40,7 @@ namespace Login
                 string loginpwd = txtbox_pwd.Text;
 
                 //mysql에 전송할 명령어 입력, 전송될 명령어는 ""사이의 값
-                //string selectQuery = "SELECT * FROM account WHERE id = \'" + loginid + "\' ";
-                string selectQuery = string.Format("SELECT * FROM account WHERE id = '{0}'",loginid);
+                string selectQuery = "SELECT * FROM account WHERE id = \'" + loginid + "\' ";
 
                 //MySqlCommand는 mysql로 명령어를 전송하기 위한 클래스
                 //mysql에 selectQuery 값을 보내고 connection 값을 보내 연결 시도
@@ -76,8 +75,6 @@ namespace Login
                 else
                 {
                     MessageBox.Show("아이디 혹은 비밀번호를 잘못 입력하셨거나 등록되지 않은 회원 입니다.");
-                    txtbox_id.Clear(); //두 텍스트 박스 초기화
-                    txtbox_pwd.Clear(); 
                 }
             }
             catch (Exception ex)

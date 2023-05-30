@@ -39,45 +39,40 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(45, 44);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(36, 37);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(62, 18);
+            this.label1.Size = new System.Drawing.Size(52, 15);
             this.label1.TabIndex = 0;
             this.label1.Text = "아이디";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 89);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(36, 74);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 18);
+            this.label2.Size = new System.Drawing.Size(67, 15);
             this.label2.TabIndex = 1;
             this.label2.Text = "비밀번호";
             // 
             // txtbox_id
             // 
-            this.txtbox_id.Location = new System.Drawing.Point(176, 41);
-            this.txtbox_id.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtbox_id.Location = new System.Drawing.Point(141, 34);
             this.txtbox_id.Name = "txtbox_id";
-            this.txtbox_id.Size = new System.Drawing.Size(178, 28);
+            this.txtbox_id.Size = new System.Drawing.Size(143, 25);
             this.txtbox_id.TabIndex = 2;
             // 
             // txtbox_pwd
             // 
-            this.txtbox_pwd.Location = new System.Drawing.Point(176, 85);
-            this.txtbox_pwd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtbox_pwd.Location = new System.Drawing.Point(141, 71);
             this.txtbox_pwd.Name = "txtbox_pwd";
-            this.txtbox_pwd.Size = new System.Drawing.Size(178, 28);
+            this.txtbox_pwd.Size = new System.Drawing.Size(143, 25);
             this.txtbox_pwd.TabIndex = 3;
             // 
             // btn_login
             // 
-            this.btn_login.Location = new System.Drawing.Point(49, 174);
-            this.btn_login.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_login.Location = new System.Drawing.Point(39, 145);
             this.btn_login.Name = "btn_login";
-            this.btn_login.Size = new System.Drawing.Size(134, 76);
+            this.btn_login.Size = new System.Drawing.Size(107, 63);
             this.btn_login.TabIndex = 4;
             this.btn_login.Text = "로그인";
             this.btn_login.UseVisualStyleBackColor = true;
@@ -85,29 +80,27 @@
             // 
             // btn_signin
             // 
-            this.btn_signin.Location = new System.Drawing.Point(230, 174);
-            this.btn_signin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_signin.Location = new System.Drawing.Point(184, 145);
             this.btn_signin.Name = "btn_signin";
-            this.btn_signin.Size = new System.Drawing.Size(125, 76);
+            this.btn_signin.Size = new System.Drawing.Size(100, 63);
             this.btn_signin.TabIndex = 5;
             this.btn_signin.Text = "회원가입";
             this.btn_signin.UseVisualStyleBackColor = true;
             this.btn_signin.Click += new System.EventHandler(this.btn_signin_Click);
             // 
-            // signIn
+            // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(409, 290);
+            this.ClientSize = new System.Drawing.Size(327, 242);
             this.Controls.Add(this.btn_signin);
             this.Controls.Add(this.btn_login);
             this.Controls.Add(this.txtbox_pwd);
             this.Controls.Add(this.txtbox_id);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.Name = "signIn";
-            this.Text = "로그인";
+            this.Name = "Form1";
+            this.Text = "Form1";
             this.ResumeLayout(false);
             this.PerformLayout();
 

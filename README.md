@@ -18,9 +18,7 @@ password - 사용자의 비밀번호 (VARCHAR(20))
 ### todo
 todolist의 데이터를 기록한 테이블
 
-primary_id - 기본키 및 중복 처리를 위한 번호(INT)
-
-my_uid - 사용자의 고유 번호(INT) 
+uid - 사용자의 고유 번호(INT) 
 
 date - 해당 list의 날짜(DATE)
 
@@ -43,11 +41,6 @@ TIME - 채팅을 보낸 시간 (DATE)
 my_uid - 사용자의 uid(INT)
 
 friend_uid - 사용자 친구의 uid(INT)
-### isFriend
-친구 신청 유무를 확인하기 위한 테이블
 
-sender - 친구 신청을 보낸 사람의 uid(INT)
-
-receiver - 친구 신청을 받은 사람의 uid(INT)
 
 

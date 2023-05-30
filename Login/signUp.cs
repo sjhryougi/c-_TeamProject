@@ -23,15 +23,6 @@ namespace Login
         {
             try
             {
-                //만약 아이디나 비번 중 한개라도 공백인 경우 리턴
-                if (txtbox_id.Text == "" || txtbox_pwd.Text == "") {
-                    MessageBox.Show("공백인 칸이 존재합니다.");
-                    txtbox_id.Clear(); //두 텍스트 박스 초기화
-                    txtbox_pwd.Clear();
-                    return;
-                }
-                    
-
                 //서버 연결
                 MySqlConnection connection = new MySqlConnection("Server = 34.64.76.194;Database=todolist;Uid=root;Pwd=12345;");
                 connection.Open();
@@ -55,9 +46,26 @@ namespace Login
                 //중복되지 않은 id가 있으면 추가
                 if (isDuplicated != 1)
                 {
-                    
+                    //uid를 구하기 위한 코드
+                    //db의 마지막 행을 구하는 쿼리문
+                    string getUid = "SELECT * FROM account ORDER BY uid DESC LIMIT 1";
+                    MySqlCommand getUidCommand = new MySqlCommand(getUid, connection);
+                    MySqlDataReader getUidReader = getUidCommand.ExecuteReader();
+
+                    //한번만 읽으면 되기 때문에 while 사용하지 않음
+                    //uid를 구하고 1을 더하면 된다.
+                    //맨 처음인 경우 행이 없을 수 있기 때문에 디폴트로 1을 설정하고 행이 있으면 수정하는 방식
+                    getUidReader.Read();
+                    int uid = 1;
+                    if (getUidReader.HasRows)
+                    {
+                        uid = (int)getUidReader["uid"] + 1;
+                    }
+                    getUidReader.Close();
+
+
                     //account table에 값을 추가하기 위한 코드
-                    string insertQuery = "INSERT INTO account (id, password) VALUES ('" + txtbox_id.Text + "', '" + txtbox_pwd.Text + "');";
+                    string insertQuery = "INSERT INTO account (uid, id, password) VALUES ('" + uid + "','" + txtbox_id.Text + "', '" + txtbox_pwd.Text + "');";
                     MySqlCommand command = new MySqlCommand(insertQuery, connection);
                     command.ExecuteNonQuery();
              
@@ -68,8 +76,6 @@ namespace Login
                 else
                 {
                     MessageBox.Show("중복되는 아이디입니다.");
-                    txtbox_id.Clear(); //두 텍스트 박스 초기화
-                    txtbox_pwd.Clear();
                 }
             }
             catch (Exception ex)

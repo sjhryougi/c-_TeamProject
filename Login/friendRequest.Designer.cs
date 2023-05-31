@@ -75,6 +75,7 @@
             this.Controls.Add(this.friendList);
             this.Name = "friendRequest";
             this.Text = "friendRequest";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.friendRequest_FormClosing);
             this.ResumeLayout(false);
 
         }

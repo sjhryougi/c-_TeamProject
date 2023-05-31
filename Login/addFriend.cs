@@ -70,6 +70,7 @@ namespace Login
                             command = new MySqlCommand(insertQuery, connection);
                             command.ExecuteNonQuery();
                             MessageBox.Show("친구 추가를 보냈습니다.");
+                            txtFriend.Clear();
                         } else
                         {
                             MessageBox.Show("이미 친구 신청을 보낸 상태입니다");

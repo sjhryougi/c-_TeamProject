@@ -13,13 +13,13 @@ namespace Login
 {
     public partial class addFriend : Form
     {
-        int myUid;
+        string myId;
 
-        public addFriend(int data)
+        public addFriend(string data)
         {
             InitializeComponent();
 
-            myUid = data;
+            myId = data;
         }
 
         private void txtFriend_TextChanged(object sender, EventArgs e)
@@ -30,7 +30,7 @@ namespace Login
         private void btnAdd_Click(object sender, EventArgs e)
         {
             string friendName = txtFriend.Text; //텍스트 박스에 적은 내용을 저장
-            int friendUid; //친구의 uid를 저장할 변수
+            string friendId; //친구의 id를 저장할 변수
 
             //서버 연결을 위한 설정
             MySqlConnection connection = new MySqlConnection("Server = 34.64.76.194;Database=todolist;Uid=root;Pwd=12345;");
@@ -47,50 +47,54 @@ namespace Login
             if(accountReader.HasRows) {
                 accountReader.Read();
                 //id가 자기 자신이 아니라면 이미 친구인지 확인
-                if ((int)accountReader["uid"] != myUid) {
-                    friendUid = (int)accountReader["uid"]; //친구의 uid 저장
+                if ((string)accountReader["id"] != myId) {
+                    friendId = (string)accountReader["Id"]; //친구의 uid 저장
                     accountReader.Close();
 
                     //이미 친구인지 확인하기 위한 쿼리문
-                    findQuery = string.Format("SELECT * FROM friend WHERE my_uid = '{0}' and friend_uid = '{1}'", myUid,friendUid);
+                    findQuery = string.Format("SELECT * FROM friend WHERE my_id = '{0}' and friend_id = '{1}'", myId,friendId);
                     command = new MySqlCommand(findQuery, connection);
                     accountReader = command.ExecuteReader();
                     
                     //친구가 아니면 이미 친구 신청을 보냈는지 확인
                     if (!accountReader.HasRows) {
                         accountReader.Close();
-                        findQuery = string.Format("SELECT * FROM isfriend WHERE sender = '{0}' and receiver = '{1}'", myUid, friendUid);
+                        findQuery = string.Format("SELECT * FROM isfriend WHERE sender = '{0}' and receiver = '{1}'", myId, friendId);
                         command = new MySqlCommand(findQuery, connection);
                         accountReader = command.ExecuteReader();
 
                         //모든 경우가 아닌 경우 친구 추가를 보낸다.
                         if (!accountReader.HasRows) {
                             accountReader.Close();
-                            string insertQuery = string.Format("INSERT INTO isfriend (sender, receiver) VALUES ('{0}', '{1}');", myUid, friendUid);
+                            string insertQuery = string.Format("INSERT INTO isfriend (sender, receiver) VALUES ('{0}', '{1}');", myId, friendId);
                             command = new MySqlCommand(insertQuery, connection);
                             command.ExecuteNonQuery();
                             MessageBox.Show("친구 추가를 보냈습니다.");
                         } else
                         {
                             MessageBox.Show("이미 친구 신청을 보낸 상태입니다");
+                            txtFriend.Clear();
                             accountReader.Close();
                         }
 
                     } else
                     {
                         MessageBox.Show("이미 친구인 사람입니다");
+                        txtFriend.Clear();
                         accountReader.Close();
                     }
                 }   
                 else
                 {
                     MessageBox.Show("자기 자신에게 친구 신청을 할 수 없습니다.");
+                    txtFriend.Clear();
                     accountReader.Close();
                 }
             }
             else
             {
                 MessageBox.Show("존재하지 않는 id입니다");
+                txtFriend.Clear();
                 accountReader.Close();
             }
             connection.Close();

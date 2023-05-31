@@ -34,10 +34,10 @@ namespace Login
                 
                 //로그인 상태 변수 선언, 비로그인 상태는 0
                 int login_status = 0;
-                int uid = 0;
 
-                string loginid = txtbox_id.Text;
-                string loginpwd = txtbox_pwd.Text;
+                //앞뒤 공백 제거
+                string loginid = txtbox_id.Text.Trim();
+                string loginpwd = txtbox_pwd.Text.Trim();
 
                 //mysql에 전송할 명령어 입력, 전송될 명령어는 ""사이의 값
                 //string selectQuery = "SELECT * FROM account WHERE id = \'" + loginid + "\' ";
@@ -59,7 +59,6 @@ namespace Login
                     if (loginid == (string)userAccount["id"] && loginpwd == (string)userAccount["password"])
                     {
                         login_status = 1;
-                        uid = (int)userAccount["uid"];
                     }
                 }
                 connection.Close();
@@ -70,8 +69,8 @@ namespace Login
                     txtbox_id.Clear();
                     txtbox_pwd.Clear();
 
-                    //로그인한 계정의 uid로 todo를 자식 폼으로 호출
-                    todo todoForm = new todo(uid);
+                    //로그인한 계정의 id로 todo를 자식 폼으로 호출
+                    todo todoForm = new todo(loginid);
                     todoForm.Owner = this;
                     todoForm.ShowDialog();
                 }

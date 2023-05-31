@@ -23,8 +23,12 @@ namespace Login
         {
             try
             {
+                //입력 값의 앞뒤에 공백이 있을 수 있기에 이를 처리
+                string id = txtbox_id.Text.Trim();
+                string pwd = txtbox_pwd.Text.Trim();
+
                 //만약 아이디나 비번 중 한개라도 공백인 경우 리턴
-                if (txtbox_id.Text == "" || txtbox_pwd.Text == "") {
+                if (id == "" || pwd == "") {
                     MessageBox.Show("공백인 칸이 존재합니다.");
                     txtbox_id.Clear(); //두 텍스트 박스 초기화
                     txtbox_pwd.Clear();
@@ -41,13 +45,13 @@ namespace Login
                 int isDuplicated = 0;
 
                 //중복을 찾기 위한 쿼리문
-                string searchDuplication = "SELECT * FROM account WHERE id = \'" + txtbox_id.Text + "\' ";
+                string searchDuplication = "SELECT * FROM account WHERE id = \'" + id + "\' ";
                 MySqlCommand Selectcommand = new MySqlCommand(searchDuplication, connection);
                 MySqlDataReader userAccount = Selectcommand.ExecuteReader();
 
                 //중복되는 id가 있는지 확인
                 while (userAccount.Read()) {
-                    if (txtbox_id.Text == (string)userAccount["id"])
+                    if (id == (string)userAccount["id"])
                         isDuplicated = 1;
                 }
                 userAccount.Close();
@@ -57,7 +61,7 @@ namespace Login
                 {
                     
                     //account table에 값을 추가하기 위한 코드
-                    string insertQuery = "INSERT INTO account (id, password) VALUES ('" + txtbox_id.Text + "', '" + txtbox_pwd.Text + "');";
+                    string insertQuery = "INSERT INTO account (id, password) VALUES ('" + id + "', '" + pwd + "');";
                     MySqlCommand command = new MySqlCommand(insertQuery, connection);
                     command.ExecuteNonQuery();
              

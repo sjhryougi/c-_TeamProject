@@ -16,21 +16,21 @@ namespace Todo1
 {
     public partial class todo : Form
     {
-        //자신의 uid와 현재 선택한 사람의 uid를 전역변수로 지정
-        int myUid;
-        int selectedUid;
+        //자신의 id와 현재 선택한 사람의 id를 전역변수로 지정
+        string myId;
+        string selectedId;
 
         //서버 연결을 위한 설정
         MySqlConnection connection = new MySqlConnection("Server = 34.64.76.194;Database=todolist;Uid=root;Pwd=12345;");
 
-        public todo(int Data)
+        public todo(string Data)
         {
             InitializeComponent();
             connection.Open(); //서버 연결
 
             dateTimePicker.Value = DateTime.Today; //캘린더의 날짜를 당일로 변경
-            myUid = Data; //signIn에서 넘긴 uid값을 저장
-            selectedUid = myUid; //초기에 선택한 uid는 자기 자신이다.
+            myId = Data; //signIn에서 넘긴 id를 저장
+            selectedId = myId; //초기에 선택한 id는 자기 자신이다.
             RefreshToDoList(); //todolist 실행
 
         }
@@ -51,7 +51,7 @@ namespace Todo1
         private void addButton_Click(object sender, EventArgs e)
         {
             //본인의 todolist에만 데이터를 추가해야하기에 이를 위한 확인 절차
-            if (selectedUid == myUid)
+            if (selectedId == myId)
             {
                 string todo = todoTextBox.Text;    //추가할 문자열을 todo에 저장
 
@@ -65,7 +65,7 @@ namespace Todo1
                     {
                         //table에 값을 추가하기 위한 코드
                         //string insertList = "INSERT INTO todo (my_uid, date, text, check) VALUES ('" + myUid + "','" + selectedDate + "', '" + todo + "', '" +  0 +"');";
-                        string insertList = string.Format("INSERT INTO todo (my_uid, date, text, checkTodo) VALUES ('{0}', '{1}', '{2}', '{3}');", myUid, selectedDate, todo, 0);
+                        string insertList = string.Format("INSERT INTO todo (id, date, text, checkTodo) VALUES ('{0}', '{1}', '{2}', '{3}');", myId, selectedDate, todo, 0);
                         MySqlCommand command = new MySqlCommand(insertList, connection);
                         command.ExecuteNonQuery();
                     }
@@ -85,14 +85,14 @@ namespace Todo1
         private void deleteButton_Click(object sender, EventArgs e)
         {
             //본인의 todolist의 데이터만 삭제해야하기에 이를 위한 확인 절차
-            if (selectedUid == myUid)
+            if (selectedId == myId)
             {
                     //선택한 날짜와 아이템을 변수에 저장
                     string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
                     string selectedText = todoListBox.SelectedItem.ToString();
 
                     //선택한 값을 삭제하기 위한 쿼리문
-                    string deleteList = string.Format("DELETE FROM todo WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                    string deleteList = string.Format("DELETE FROM todo WHERE id = '{0}' and date = '{1}'and text = '{2}';", myId, selectedDate, selectedText);
                     MySqlCommand command = new MySqlCommand(deleteList, connection);
                     command.ExecuteNonQuery();
 
@@ -108,8 +108,8 @@ namespace Todo1
             todoListBox.Items.Clear();
             string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
 
-            //db에서 선택한 날짜와 uid에 맞는 데이터를 가져오기 위한 쿼리문 (
-            string getTodoList = string.Format("SELECT text, checkTodo FROM todo WHERE my_uid = '{0}' and date = '{1}'", selectedUid, selectedDate);
+            //db에서 선택한 날짜와 id에 맞는 데이터를 가져오기 위한 쿼리문 (
+            string getTodoList = string.Format("SELECT text, checkTodo FROM todo WHERE id = '{0}' and date = '{1}'", selectedId, selectedDate);
             MySqlCommand command = new MySqlCommand(getTodoList, connection);
             MySqlDataReader todoRefresh = command.ExecuteReader();
 
@@ -136,14 +136,14 @@ namespace Todo1
         private void completeButton_Click(object sender, EventArgs e)
         {
             //본인의 todolist의 데이터만 체크해야하기 때문에 이를 위한 확인 절차
-            if (selectedUid == myUid)
+            if (selectedId == myId)
             {
                 //선택한 날짜와 아이템을 변수에 저장
                 string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
                 string selectedText = todoListBox.SelectedItem.ToString().Replace("✔", ""); //체크가 되어있는 텍스트가 존재할 수 있기에 이를 제거해야 한다.
 
                 //선택한 값이 check 상태인지 값을 얻기 위한 쿼리문
-                string findQuery = string.Format("SELECT checkTodo FROM todo WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                string findQuery = string.Format("SELECT checkTodo FROM todo WHERE id = '{0}' and date = '{1}'and text = '{2}';", myId, selectedDate, selectedText);
                 MySqlCommand command = new MySqlCommand(findQuery, connection);
                 MySqlDataReader todoReader = command.ExecuteReader();
 
@@ -153,11 +153,11 @@ namespace Todo1
                 //만약 체크 상태인 경우 체크를 해제하고 체크 상태가 아니면 체크한다.
                 if (todoReader["checkTodo"].ToString() == "1")
                 {
-                    updateQuery = string.Format("UPDATE todo SET checkTodo = '0' WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                    updateQuery = string.Format("UPDATE todo SET checkTodo = '0' WHERE id = '{0}' and date = '{1}'and text = '{2}';", myId, selectedDate, selectedText);
                 }
                 else
                 {
-                    updateQuery = string.Format("UPDATE todo SET checkTodo = '1' WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                    updateQuery = string.Format("UPDATE todo SET checkTodo = '1' WHERE id = '{0}' and date = '{1}'and text = '{2}';", myId, selectedDate, selectedText);
                 }
                 todoReader.Close();
 
@@ -176,10 +176,10 @@ namespace Todo1
 
         }
 
-        //선택할 uid를 내 uid로 바꾸는 버튼
+        //선택할 ud를 내 id로 바꾸는 버튼
         private void meButton_Click(object sender, EventArgs e)
         {
-            selectedUid = myUid;
+            selectedId = myId;
         }
 
         private void chatButton_Click(object sender, EventArgs e)
@@ -200,9 +200,23 @@ namespace Todo1
         private void btnAddFriend_Click(object sender, EventArgs e)
         {
             //친구 추가 창을 자식 폼으로 호출
-            addFriend addFirendForm = new addFriend(myUid);
+            addFriend addFirendForm = new addFriend(myId);
             addFirendForm.Owner = this;
             addFirendForm.ShowDialog();
+        }
+
+        private void btnRequestComfirm_Click(object sender, EventArgs e)
+        {
+            //요청 확인 창을 자식 폼으로 호출
+            friendRequest friendRequestForm = new friendRequest(myId);
+            friendRequestForm.Owner = this;
+            friendRequestForm.ShowDialog();
+        }
+
+        //폼 종료시 연결 해제
+        private void todo_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            connection.Close();
         }
     }
 

@@ -163,6 +163,7 @@
             this.btnRequestComfirm.TabIndex = 13;
             this.btnRequestComfirm.Text = "요청 확인";
             this.btnRequestComfirm.UseVisualStyleBackColor = true;
+            this.btnRequestComfirm.Click += new System.EventHandler(this.btnRequestComfirm_Click);
             // 
             // todo
             // 
@@ -184,6 +185,7 @@
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "todo";
             this.Text = "TodoList";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.todo_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

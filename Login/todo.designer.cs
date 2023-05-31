@@ -152,6 +152,7 @@
             this.btnAddFriend.TabIndex = 12;
             this.btnAddFriend.Text = "친구 추가";
             this.btnAddFriend.UseVisualStyleBackColor = true;
+            this.btnAddFriend.Click += new System.EventHandler(this.btnAddFriend_Click);
             // 
             // btnRequestComfirm
             // 
@@ -182,7 +183,7 @@
             this.Font = new System.Drawing.Font("굴림", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "todo";
-            this.Text = "Form1";
+            this.Text = "TodoList";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

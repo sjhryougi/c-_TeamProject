@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Login;
 using MySql.Data.MySqlClient;
 using Org.BouncyCastle.Utilities.Collections;
 
@@ -194,6 +195,14 @@ namespace Todo1
 
         private void todoListBox_DrawItem(object sender, DrawItemEventArgs e)
         {
+        }
+
+        private void btnAddFriend_Click(object sender, EventArgs e)
+        {
+            //친구 추가 창을 자식 폼으로 호출
+            addFriend addFirendForm = new addFriend(myUid);
+            addFirendForm.Owner = this;
+            addFirendForm.ShowDialog();
         }
     }
 

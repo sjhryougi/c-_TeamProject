@@ -67,6 +67,8 @@ namespace Login
                 if (login_status == 1)
                 {
                     MessageBox.Show("로그인 완료");
+                    txtbox_id.Clear();
+                    txtbox_pwd.Clear();
 
                     //로그인한 계정의 uid로 todo를 자식 폼으로 호출
                     todo todoForm = new todo(uid);

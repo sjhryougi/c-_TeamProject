@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Org.BouncyCastle.Utilities.Collections;
 
 namespace Todo1
 {
@@ -58,37 +59,45 @@ namespace Todo1
                 {
                     string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
 
-
-                    //table에 값을 추가하기 위한 코드
-                    //string insertList = "INSERT INTO todo (my_uid, date, text, check) VALUES ('" + myUid + "','" + selectedDate + "', '" + todo + "', '" +  0 +"');";
-                    string insertList = string.Format("INSERT INTO todo (my_uid, date, text, checkTodo) VALUES ('{0}', '{1}', '{2}', '{3}');", myUid, selectedDate, todo, 0);
-                    MySqlCommand command = new MySqlCommand(insertList, connection);
-                    command.ExecuteNonQuery();
-
+                    //입력할 때 중복이거나 텍스트의 길이가 너무 길면 db에 문제가 발생하기에 이를 막기 위한 예외처리문
+                    try
+                    {
+                        //table에 값을 추가하기 위한 코드
+                        //string insertList = "INSERT INTO todo (my_uid, date, text, check) VALUES ('" + myUid + "','" + selectedDate + "', '" + todo + "', '" +  0 +"');";
+                        string insertList = string.Format("INSERT INTO todo (my_uid, date, text, checkTodo) VALUES ('{0}', '{1}', '{2}', '{3}');", myUid, selectedDate, todo, 0);
+                        MySqlCommand command = new MySqlCommand(insertList, connection);
+                        command.ExecuteNonQuery();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("중복되는 텍스트이거나 텍스트의 길이가 너무 깁니다.");
+                    }
 
                     RefreshToDoList();
                     todoTextBox.Clear();
-                    // connection.Close();
                 }
             }
 
         }
 
-        private void deleteButton_Click(object sender, EventArgs e)
-        {/*
-            DateTime selectedDate = dateTimePicker.Value.Date;
-            if (todoDictionary.ContainsKey(selectedDate))
-            {
-                List<string> todoList = todoDictionary[selectedDate];
-                string selectedTodo = todoListBox.SelectedItem.ToString();
-                todoList.Remove(selectedTodo);
-                if (todoList.Count == 0)
-                {
-                    todoDictionary.Remove(selectedDate);
-                }
 
-                RefreshToDoList();
-            }*/
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            //본인의 todolist의 데이터만 삭제해야하기에 이를 위한 확인 절차
+            if (selectedUid == myUid)
+            {
+                    //선택한 날짜와 아이템을 변수에 저장
+                    string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
+                    string selectedText = todoListBox.SelectedItem.ToString();
+
+                    //선택한 값을 삭제하기 위한 쿼리문
+                    string deleteList = string.Format("DELETE FROM todo WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                    MySqlCommand command = new MySqlCommand(deleteList, connection);
+                    command.ExecuteNonQuery();
+
+                    RefreshToDoList();
+                
+            }
         }
 
         //선택한 날짜와 선택한 사람의 todolist를 출력하는 함수
@@ -98,16 +107,23 @@ namespace Todo1
             todoListBox.Items.Clear();
             string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
 
-            //db에서 선택한 날짜와 uid에 맞는 데이터를 가져오기 위한 쿼리문
+            //db에서 선택한 날짜와 uid에 맞는 데이터를 가져오기 위한 쿼리문 (
             string getTodoList = string.Format("SELECT text, checkTodo FROM todo WHERE my_uid = '{0}' and date = '{1}'", selectedUid, selectedDate);
             MySqlCommand command = new MySqlCommand(getTodoList, connection);
-            MySqlDataReader todoReader = command.ExecuteReader();
+            MySqlDataReader todoRefresh = command.ExecuteReader();
 
-            while (todoReader.Read())
+
+            while (todoRefresh.Read())
             {
-                todoListBox.Items.Add(todoReader["text"].ToString());
+               //출력할 텍스트가 체크된것이면 체크 모양을 붙여서 출력하고 아니면 그냥 출력
+                if (todoRefresh["checkTodo"].ToString() == "1") {
+                    todoListBox.Items.Add("✔" + todoRefresh["text"].ToString());
+                }
+                else {
+                    todoListBox.Items.Add(todoRefresh["text"].ToString());
+                }               
             }
-            todoReader.Close();
+            todoRefresh.Close();
 
         }
 
@@ -118,29 +134,39 @@ namespace Todo1
 
         private void completeButton_Click(object sender, EventArgs e)
         {
-            /*
-            if (todoDictionary.ContainsKey(selectedDate))
+            //본인의 todolist의 데이터만 체크해야하기 때문에 이를 위한 확인 절차
+            if (selectedUid == myUid)
             {
-                List<string> todoList = todoDictionary[selectedDate];
-                int selectedIndex = todoListBox.SelectedIndex;
-                if (selectedIndex >= 0 && selectedIndex < todoList.Count)
-                {
-                    string selectedTodo = todoList[selectedIndex];
-                    if (selectedTodo.EndsWith(" [완료]"))
-                    {
-                        string uncompletedTodo = selectedTodo.Substring(0, selectedTodo.Length - 5);
-                        todoList[selectedIndex] = uncompletedTodo;
-                        todoListBox.Items[selectedIndex] = uncompletedTodo;
-                    }
-                    else
-                    {
-                        string completedTodo = selectedTodo + " [완료]";
-                        todoList[selectedIndex] = completedTodo;
-                        todoListBox.Items[selectedIndex] = completedTodo;
-                    }
-                }
-            }*/
+                //선택한 날짜와 아이템을 변수에 저장
+                string selectedDate = dateTimePicker.Value.Date.ToString("yyyy-MM-dd");
+                string selectedText = todoListBox.SelectedItem.ToString().Replace("✔", ""); //체크가 되어있는 텍스트가 존재할 수 있기에 이를 제거해야 한다.
 
+                //선택한 값이 check 상태인지 값을 얻기 위한 쿼리문
+                string findQuery = string.Format("SELECT checkTodo FROM todo WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                MySqlCommand command = new MySqlCommand(findQuery, connection);
+                MySqlDataReader todoReader = command.ExecuteReader();
+
+                string updateQuery=""; // checkTodo를 수정하기 위한 쿼리문
+                todoReader.Read();
+                              
+                //만약 체크 상태인 경우 체크를 해제하고 체크 상태가 아니면 체크한다.
+                if (todoReader["checkTodo"].ToString() == "1")
+                {
+                    updateQuery = string.Format("UPDATE todo SET checkTodo = '0' WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                }
+                else
+                {
+                    updateQuery = string.Format("UPDATE todo SET checkTodo = '1' WHERE my_uid = '{0}' and date = '{1}'and text = '{2}';", myUid, selectedDate, selectedText);
+                }
+                todoReader.Close();
+
+                //쿼리문 실행
+                command = new MySqlCommand(updateQuery, connection);
+                command.ExecuteNonQuery();
+                
+            
+                RefreshToDoList();
+            }
         }
 
 
@@ -149,9 +175,10 @@ namespace Todo1
 
         }
 
+        //선택할 uid를 내 uid로 바꾸는 버튼
         private void meButton_Click(object sender, EventArgs e)
         {
-
+            selectedUid = myUid;
         }
 
         private void chatButton_Click(object sender, EventArgs e)
@@ -163,6 +190,10 @@ namespace Todo1
         private void cmbSelectName_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void todoListBox_DrawItem(object sender, DrawItemEventArgs e)
+        {
         }
     }
 

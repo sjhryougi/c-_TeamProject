@@ -73,7 +73,7 @@
             this.completeButton.Location = new System.Drawing.Point(705, 264);
             this.completeButton.Margin = new System.Windows.Forms.Padding(2);
             this.completeButton.Name = "completeButton";
-            this.completeButton.Size = new System.Drawing.Size(72, 35);
+            this.completeButton.Size = new System.Drawing.Size(75, 35);
             this.completeButton.TabIndex = 2;
             this.completeButton.Text = "체크";
             this.completeButton.UseVisualStyleBackColor = true;
@@ -109,6 +109,7 @@
             this.todoListBox.Name = "todoListBox";
             this.todoListBox.Size = new System.Drawing.Size(406, 200);
             this.todoListBox.TabIndex = 6;
+            this.todoListBox.DrawItem += new System.Windows.Forms.DrawItemEventHandler(this.todoListBox_DrawItem);
             this.todoListBox.SelectedIndexChanged += new System.EventHandler(this.todoListBox_SelectedIndexChanged);
             // 
             // meButton

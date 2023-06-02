@@ -9,6 +9,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Windows.Forms;
 using MySql.Data.MySqlClient;
+using Todo1;
 
 namespace ChattingProgram
 {
@@ -28,22 +29,23 @@ namespace ChattingProgram
         }
         public void Send()
         {
-            if(this.txtSend.Text != "")
+            if(txtSend.Text != "")
             {
                 string sendMessage = txtSend.Text;
-                string sendTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                string sendTime = DateTime.Now.ToString("yyyy-MM-dd");
 
                 // 메시지 전송
                 try
                 {
-                    string insertMessage = string.Format("INSERT INTO chat (sender, reciver, content, TIME) VALUES ('{0}', '{1}', '{2}', '{3}');", myID, friendID, sendMessage, sendTime);
+                    string insertMessage = string.Format("INSERT INTO chat (sender_id, receiver_id, content, time) VALUES ('{0}', '{1}', '{2}', '{3}');", myID, friendID, sendMessage, sendTime);
                     MySqlCommand command = new MySqlCommand(insertMessage, connection);
                     command.ExecuteNonQuery();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
-                    MessageBox.Show("메시지가 입력되지 않았습니다.");
+                    MessageBox.Show("중복되는 텍스트이거나 텍스트의 길이가 너무 깁니다.");
                 }
+                
 
                 txtSend.Clear();
             }
@@ -82,35 +84,43 @@ namespace ChattingProgram
 
             }
             todoRefresh.Close();
-            connection.Close();
-        }
-
-        private void lstFriend_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            Clear();
-
-            friendID = lstFriend.Items.ToString();
-            //채팅 로그 가져오기
-            string getChatList = string.Format("SELECT * FROM chat WHERE sender = '{0}' or sender = '{1}' ORDERD BY TIME ASC;", myID, myID);
-            MySqlCommand command = new MySqlCommand(getChatList, connection);
-            MySqlDataReader chatReader = command.ExecuteReader();
-
-            while (chatReader.Read())
-            {
-                if (chatReader["sender"].ToString() == myID)
-                {
-                    txtAll.AppendText(myID + ">>" + chatReader["content"].ToString() + "\n" + chatReader["TIME"].ToString() + "\n");
-                }
-                else
-                {
-                    txtAll.AppendText(friendID + ">>" + chatReader["content"].ToString() + "\n" + chatReader["TIME"].ToString() + "\n");
-                }
-            }
         }
 
         private void Clear()
         {
             txtAll.Clear();
+        }
+
+        private void lstFriend_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (lstFriend.SelectedItems.Count != 0)
+            {
+                Clear();
+
+                friendID = lstFriend.Items[lstFriend.FocusedItem.Index].SubItems[0].Text.ToString();
+                //채팅 로그 가져오기
+                string getChatList = string.Format("SELECT * FROM chat WHERE sender_id = '{0}' or sender_id = '{1}' ORDER BY time ASC;", myID, friendID);
+                MySqlCommand command = new MySqlCommand(getChatList, connection);
+                MySqlDataReader chatReader = command.ExecuteReader();
+
+                while (chatReader.Read())
+                {
+                    if (chatReader["sender_id"].ToString() == myID)
+                    {
+                        txtAll.AppendText(myID + ">>" + chatReader["content"].ToString() + "\n" + chatReader["time"].ToString() + "\n");
+                    }
+                    else
+                    {
+                        txtAll.AppendText(friendID + ">>" + chatReader["content"].ToString() + "\n" + chatReader["time"].ToString() + "\n");
+                    }
+                }
+                chatReader.Close();
+            }
+        }
+
+        private void chat_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            connection.Close();
         }
     }
 }

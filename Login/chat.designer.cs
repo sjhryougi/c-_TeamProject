@@ -90,7 +90,7 @@
             this.lstFriend.TileSize = new System.Drawing.Size(228, 50);
             this.lstFriend.UseCompatibleStateImageBehavior = false;
             this.lstFriend.View = System.Windows.Forms.View.SmallIcon;
-            this.lstFriend.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstFriend_ColumnClick);
+            this.lstFriend.SelectedIndexChanged += new System.EventHandler(this.lstFriend_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
@@ -126,6 +126,7 @@
             this.Controls.Add(this.txtAll);
             this.Name = "chat";
             this.Text = "Chat";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.chat_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

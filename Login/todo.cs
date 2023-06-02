@@ -8,9 +8,10 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ChattingProgram;
 using Login;
 using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Utilities.Collections;
+//using Org.BouncyCastle.Utilities.Collections;
 
 namespace Todo1
 {
@@ -200,7 +201,9 @@ namespace Todo1
 
         private void chatButton_Click(object sender, EventArgs e)
         {
-
+            chat chatForm = new chat(myId);
+            chatForm.Owner = this;
+            chatForm.ShowDialog();
         }
 
 

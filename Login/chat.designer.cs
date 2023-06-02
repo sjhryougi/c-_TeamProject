@@ -30,22 +30,14 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(chat));
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem("1", "1.png");
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem("2", 1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem("3", 2);
             this.txtAll = new System.Windows.Forms.RichTextBox();
             this.txtSend = new System.Windows.Forms.TextBox();
             this.btnSend = new System.Windows.Forms.Button();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.파일FToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.옵션OToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.도움말HToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lstFriend = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btnImage = new System.Windows.Forms.Button();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
-            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtAll
@@ -84,56 +76,21 @@
             this.imageList1.Images.SetKeyName(1, "2.png");
             this.imageList1.Images.SetKeyName(2, "3.png");
             // 
-            // menuStrip1
-            // 
-            this.menuStrip1.BackColor = System.Drawing.SystemColors.Control;
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.파일FToolStripMenuItem,
-            this.옵션OToolStripMenuItem,
-            this.도움말HToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 24);
-            this.menuStrip1.TabIndex = 4;
-            this.menuStrip1.Text = "menuStrip1";
-            // 
-            // 파일FToolStripMenuItem
-            // 
-            this.파일FToolStripMenuItem.Name = "파일FToolStripMenuItem";
-            this.파일FToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
-            this.파일FToolStripMenuItem.Text = "파일(F)";
-            // 
-            // 옵션OToolStripMenuItem
-            // 
-            this.옵션OToolStripMenuItem.Name = "옵션OToolStripMenuItem";
-            this.옵션OToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
-            this.옵션OToolStripMenuItem.Text = "옵션(O)";
-            // 
-            // 도움말HToolStripMenuItem
-            // 
-            this.도움말HToolStripMenuItem.Name = "도움말HToolStripMenuItem";
-            this.도움말HToolStripMenuItem.Size = new System.Drawing.Size(72, 20);
-            this.도움말HToolStripMenuItem.Text = "도움말(H)";
-            // 
             // lstFriend
             // 
             this.lstFriend.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnHeader1});
             this.lstFriend.HideSelection = false;
-            this.lstFriend.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
             this.lstFriend.Location = new System.Drawing.Point(12, 37);
             this.lstFriend.MultiSelect = false;
             this.lstFriend.Name = "lstFriend";
             this.lstFriend.Size = new System.Drawing.Size(151, 360);
-            this.lstFriend.SmallImageList = this.imageList1;
             this.lstFriend.Sorting = System.Windows.Forms.SortOrder.Ascending;
             this.lstFriend.TabIndex = 5;
             this.lstFriend.TileSize = new System.Drawing.Size(228, 50);
             this.lstFriend.UseCompatibleStateImageBehavior = false;
             this.lstFriend.View = System.Windows.Forms.View.SmallIcon;
+            this.lstFriend.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstFriend_ColumnClick);
             // 
             // columnHeader1
             // 
@@ -157,7 +114,7 @@
             this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList2.Images.SetKeyName(0, "2.png");
             // 
-            // Form1
+            // chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -167,13 +124,9 @@
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txtSend);
             this.Controls.Add(this.txtAll);
-            this.Controls.Add(this.menuStrip1);
-            this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
-            this.Text = "Form1";
+            this.Name = "chat";
+            this.Text = "Chat";
             this.Load += new System.EventHandler(this.Form1_Load);
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -185,10 +138,6 @@
         private System.Windows.Forms.TextBox txtSend;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.ImageList imageList1;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem 파일FToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 옵션OToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 도움말HToolStripMenuItem;
         private System.Windows.Forms.ListView lstFriend;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.Button btnImage;

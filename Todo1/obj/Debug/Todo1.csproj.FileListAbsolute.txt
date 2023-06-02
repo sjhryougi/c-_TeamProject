@@ -9,3 +9,14 @@ C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.csproj.GenerateResource.
 C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.csproj.CoreCompileInputs.cache
 C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.exe
 C:\Users\WIN11\source\repos\Todo1\Todo1\obj\Debug\Todo1.pdb
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\bin\Debug\Todo1.exe.config
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\bin\Debug\Todo1.exe
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\bin\Debug\Todo1.pdb
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.csproj.AssemblyReference.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.csproj.SuggestedBindingRedirects.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.todo.resources
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.Properties.Resources.resources
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.csproj.GenerateResource.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.csproj.CoreCompileInputs.cache
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.exe
+D:\Soulment\대학\응용소프트웨어실습\Chat\c-_TeamProject\Todo1\obj\Debug\Todo1.pdb

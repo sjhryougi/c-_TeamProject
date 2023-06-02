@@ -7,141 +7,45 @@ using System.IO;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Threading;
+using MySql.Data.MySqlClient;
 
 namespace ChattingProgram
 {
     public partial class chat : Form
     {
-        public NetworkStream m_Stream;
-        public StreamReader m_Read;
-        public StreamWriter m_Write;
-        const int PORT = 2002;
-        private Thread m_ThReader;
+        MySqlConnection connection = new MySqlConnection("Server = 34.64.76.194;Database=todolist;Uid=root;Pwd=12345;");
 
-        public bool m_bStop = false;
+        string myID;
+        public string friendID;
 
-        private TcpListener m_listener;
-        private Thread m_thServer;
-
-        public bool m_bConnect = false;
-        TcpClient m_Client;
-
-        public chat()
+        public chat(String Data)
         {
             InitializeComponent();
+
+            connection.Open();
+            myID = Data;
         }
-
-        public void Message(string msg)
-        {
-            this.Invoke(new MethodInvoker(delegate ()
-            {
-                txtAll.AppendText(msg + "\r\n");
-
-                txtAll.Focus();
-                txtAll.ScrollToCaret();
-
-                txtSend.Focus();
-            }));
-        }
-
-        public void ServerStart()
-        {
-            try
-            {
-                m_listener = new TcpListener(PORT);
-                m_listener.Start();
-
-                m_bStop = true;
-                Message("클라이언트 접속 대기중");
-
-                while (m_bStop)
-                {
-                    TcpClient hClient = m_listener.AcceptTcpClient();
-
-                    if (hClient.Connected)
-                    {
-                        m_bConnect = true;
-                        Message("클라이언트 접속");
-
-                        m_Stream = hClient.GetStream();
-                        m_Read = new StreamReader(m_Stream);
-                        m_Write = new StreamWriter(m_Stream);
-
-                        m_ThReader = new Thread(new ThreadStart(Receive));
-                        m_ThReader.Start();
-                    }
-                }
-            }
-            catch
-            {
-                Message("시작 도중에 오류 발생");
-                return;
-            }
-        }
-
-        public void ServerStop()
-        {
-            if (!m_bStop)
-                return;
-
-            m_listener.Stop();
-
-            m_Read.Close();
-            m_Write.Close();
-
-            m_Stream.Close();
-
-            m_ThReader.Abort();
-            m_thServer.Abort();
-
-            Message("서비스 종료");
-        }
-
-        public void Disconnect()
-        {
-
-        }
-
-        public void Connect()
-        {
-
-        }
-
-        public void Receive()
-        {
-            try
-            {
-                while (m_bConnect)
-                {
-                    string szMessage = m_Read.ReadLine();
-
-                    if (szMessage != null)
-                        Message("상대방 >>> : " + szMessage);
-                }    
-            }
-            catch
-            {
-                Message("데이터를 읽는 과정에서 오류가 발생");
-            }
-            Disconnect();
-        }
-
         public void Send()
         {
-            try
+            if(this.txtSend.Text != "")
             {
-                m_Write.WriteLine(txtSend.Text);
-                m_Write.Flush();
+                string sendMessage = txtSend.Text;
+                string sendTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-                Message(">>> : " + txtSend.Text);
-                txtSend.Text = "";
-            }
-            catch
-            {
-                Message("데이터 전송 실패");
+                // 메시지 전송
+                try
+                {
+                    string insertMessage = string.Format("INSERT INTO chat (sender, reciver, content, TIME) VALUES ('{0}', '{1}', '{2}', '{3}');", myID, friendID, sendMessage, sendTime);
+                    MySqlCommand command = new MySqlCommand(insertMessage, connection);
+                    command.ExecuteNonQuery();
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show("메시지가 입력되지 않았습니다.");
+                }
+
+                txtSend.Clear();
             }
         }
 
@@ -167,6 +71,46 @@ namespace ChattingProgram
             // 서버에서 친구 목록을 가져오는 코드 작성
             // 가져온 친구 목록을 lstFriend에 추가
             
+            string getFriendList = string.Format("SELECT * FROM friend WHERE my_id = '{0}'", myID);
+            MySqlCommand command = new MySqlCommand(getFriendList, connection);
+            MySqlDataReader todoRefresh = command.ExecuteReader();
+
+            while (todoRefresh.Read())
+            {
+                //친구의 id를 리스트 박스에 넣기
+                lstFriend.Items.Add(todoRefresh["friend_id"].ToString());
+
+            }
+            todoRefresh.Close();
+            connection.Close();
+        }
+
+        private void lstFriend_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            Clear();
+
+            friendID = lstFriend.Items.ToString();
+            //채팅 로그 가져오기
+            string getChatList = string.Format("SELECT * FROM chat WHERE sender = '{0}' or sender = '{1}' ORDERD BY TIME ASC;", myID, myID);
+            MySqlCommand command = new MySqlCommand(getChatList, connection);
+            MySqlDataReader chatReader = command.ExecuteReader();
+
+            while (chatReader.Read())
+            {
+                if (chatReader["sender"].ToString() == myID)
+                {
+                    txtAll.AppendText(myID + ">>" + chatReader["content"].ToString() + "\n" + chatReader["TIME"].ToString() + "\n");
+                }
+                else
+                {
+                    txtAll.AppendText(friendID + ">>" + chatReader["content"].ToString() + "\n" + chatReader["TIME"].ToString() + "\n");
+                }
+            }
+        }
+
+        private void Clear()
+        {
+            txtAll.Clear();
         }
     }
 }

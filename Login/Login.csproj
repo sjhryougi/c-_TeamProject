@@ -92,11 +92,23 @@
     <Compile Include="addFriend.Designer.cs">
       <DependentUpon>addFriend.cs</DependentUpon>
     </Compile>
+    <Compile Include="chat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="chat.designer.cs">
+      <DependentUpon>chat.cs</DependentUpon>
+    </Compile>
     <Compile Include="friendRequest.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="friendRequest.Designer.cs">
       <DependentUpon>friendRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="selectFriend.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="selectFriend.Designer.cs">
+      <DependentUpon>selectFriend.cs</DependentUpon>
     </Compile>
     <Compile Include="signIn.cs">
       <SubType>Form</SubType>
@@ -121,8 +133,14 @@
     <EmbeddedResource Include="addFriend.resx">
       <DependentUpon>addFriend.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="chat.resx">
+      <DependentUpon>chat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="friendRequest.resx">
       <DependentUpon>friendRequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="selectFriend.resx">
+      <DependentUpon>selectFriend.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="signIn.resx">
       <DependentUpon>signIn.cs</DependentUpon>

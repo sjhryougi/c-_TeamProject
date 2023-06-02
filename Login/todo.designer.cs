@@ -36,9 +36,10 @@
             this.todoListBox = new System.Windows.Forms.ListBox();
             this.meButton = new System.Windows.Forms.Button();
             this.chatButton = new System.Windows.Forms.Button();
-            this.cmbSelectName = new System.Windows.Forms.ComboBox();
             this.btnAddFriend = new System.Windows.Forms.Button();
             this.btnRequestComfirm = new System.Windows.Forms.Button();
+            this.btn = new System.Windows.Forms.Button();
+            this.IdLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // addButton
@@ -82,7 +83,7 @@
             // dateTimePicker
             // 
             this.dateTimePicker.Font = new System.Drawing.Font("맑은 고딕", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.dateTimePicker.Location = new System.Drawing.Point(11, 50);
+            this.dateTimePicker.Location = new System.Drawing.Point(12, 50);
             this.dateTimePicker.Margin = new System.Windows.Forms.Padding(2);
             this.dateTimePicker.Name = "dateTimePicker";
             this.dateTimePicker.Size = new System.Drawing.Size(263, 35);
@@ -114,10 +115,10 @@
             // 
             // meButton
             // 
-            this.meButton.Font = new System.Drawing.Font("맑은 고딕", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.meButton.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Bold);
             this.meButton.Location = new System.Drawing.Point(12, 8);
             this.meButton.Name = "meButton";
-            this.meButton.Size = new System.Drawing.Size(262, 33);
+            this.meButton.Size = new System.Drawing.Size(117, 33);
             this.meButton.TabIndex = 7;
             this.meButton.Text = "ME";
             this.meButton.UseVisualStyleBackColor = true;
@@ -133,15 +134,6 @@
             this.chatButton.Text = "채팅하기";
             this.chatButton.UseVisualStyleBackColor = true;
             this.chatButton.Click += new System.EventHandler(this.chatButton_Click);
-            // 
-            // cmbSelectName
-            // 
-            this.cmbSelectName.FormattingEnabled = true;
-            this.cmbSelectName.Location = new System.Drawing.Point(291, 8);
-            this.cmbSelectName.Name = "cmbSelectName";
-            this.cmbSelectName.Size = new System.Drawing.Size(406, 24);
-            this.cmbSelectName.TabIndex = 11;
-            this.cmbSelectName.SelectedIndexChanged += new System.EventHandler(this.cmbSelectName_SelectedIndexChanged);
             // 
             // btnAddFriend
             // 
@@ -165,14 +157,36 @@
             this.btnRequestComfirm.UseVisualStyleBackColor = true;
             this.btnRequestComfirm.Click += new System.EventHandler(this.btnRequestComfirm_Click);
             // 
+            // btn
+            // 
+            this.btn.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Bold);
+            this.btn.Location = new System.Drawing.Point(135, 8);
+            this.btn.Name = "btn";
+            this.btn.Size = new System.Drawing.Size(139, 33);
+            this.btn.TabIndex = 14;
+            this.btn.Text = "친구 선택";
+            this.btn.UseVisualStyleBackColor = true;
+            this.btn.Click += new System.EventHandler(this.btn_Click);
+            // 
+            // IdLabel
+            // 
+            this.IdLabel.AutoSize = true;
+            this.IdLabel.Font = new System.Drawing.Font("맑은 고딕", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.IdLabel.Location = new System.Drawing.Point(297, 8);
+            this.IdLabel.Name = "IdLabel";
+            this.IdLabel.Size = new System.Drawing.Size(44, 28);
+            this.IdLabel.TabIndex = 16;
+            this.IdLabel.Text = "----";
+            // 
             // todo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(791, 389);
+            this.Controls.Add(this.IdLabel);
+            this.Controls.Add(this.btn);
             this.Controls.Add(this.btnRequestComfirm);
             this.Controls.Add(this.btnAddFriend);
-            this.Controls.Add(this.cmbSelectName);
             this.Controls.Add(this.chatButton);
             this.Controls.Add(this.meButton);
             this.Controls.Add(this.todoListBox);
@@ -202,9 +216,10 @@
         private System.Windows.Forms.ListBox todoListBox;
         private System.Windows.Forms.Button meButton;
         private System.Windows.Forms.Button chatButton;
-        private System.Windows.Forms.ComboBox cmbSelectName;
         private System.Windows.Forms.Button btnAddFriend;
         private System.Windows.Forms.Button btnRequestComfirm;
+        private System.Windows.Forms.Button btn;
+        private System.Windows.Forms.Label IdLabel;
     }
 }
 

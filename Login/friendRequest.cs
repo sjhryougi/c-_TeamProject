@@ -41,8 +41,23 @@ namespace Login
             MySqlCommand command = new MySqlCommand(deleteFriendRequest, connection);
             command.ExecuteNonQuery();
 
+            //상대방도 친구 추가를 보냈을 수도 있기에 이를 위한 쿼리문 
+            //해당 쿼리문은 상대가 친구 추가를 보내지 않은 경우 오류가 발생할 수 있기에 예외처리문에 넣음
+            try {
+                deleteFriendRequest = string.Format("DELETE FROM isfriend WHERE sender = '{0}' and receiver = '{1}';",  myId, friendId);
+                command = new MySqlCommand(deleteFriendRequest, connection);
+                command.ExecuteNonQuery();
+
+            }
+            catch (Exception ex) { };
+
             //friend에 데이터를 추가하기 위한 쿼리문 추가
             string insertFriend = string.Format("INSERT INTO friend (my_id, friend_id) VALUES ('{0}', '{1}');", myId, friendId);
+            command = new MySqlCommand(insertFriend, connection);
+            command.ExecuteNonQuery();
+
+            //친구를 추가할 때 my_id인 부분을 나와 친구 둘다 추가해야 상대방이 친구가 됨을 알수 있다.
+            insertFriend = string.Format("INSERT INTO friend (my_id, friend_id) VALUES ('{0}', '{1}');",  friendId, myId);
             command = new MySqlCommand(insertFriend, connection);
             command.ExecuteNonQuery();
 

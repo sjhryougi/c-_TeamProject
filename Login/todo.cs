@@ -18,7 +18,7 @@ namespace Todo1
     {
         //자신의 id와 현재 선택한 사람의 id를 전역변수로 지정
         string myId;
-        string selectedId;
+        public string selectedId;
 
         //서버 연결을 위한 설정
         MySqlConnection connection = new MySqlConnection("Server = 34.64.76.194;Database=todolist;Uid=root;Pwd=12345;");
@@ -78,6 +78,11 @@ namespace Todo1
                     todoTextBox.Clear();
                 }
             }
+            else
+            {
+                MessageBox.Show("다른 사람의 todo list를 수정할 수 없습니다!");
+                todoTextBox.Clear();
+            }
 
         }
 
@@ -97,7 +102,11 @@ namespace Todo1
                     command.ExecuteNonQuery();
 
                     RefreshToDoList();
-                
+
+            }
+            else
+            {
+                MessageBox.Show("다른 사람의 todo list를 수정할 수 없습니다!");
             }
         }
 
@@ -123,8 +132,10 @@ namespace Todo1
                 else {
                     todoListBox.Items.Add(todoRefresh["text"].ToString());
                 }               
-            }
+            }            
             todoRefresh.Close();
+
+            IdLabel.Text = "Todo List id : " + selectedId; //선택된 id로 출력
 
         }
 
@@ -147,9 +158,9 @@ namespace Todo1
                 MySqlCommand command = new MySqlCommand(findQuery, connection);
                 MySqlDataReader todoReader = command.ExecuteReader();
 
-                string updateQuery=""; // checkTodo를 수정하기 위한 쿼리문
+                string updateQuery = ""; // checkTodo를 수정하기 위한 쿼리문
                 todoReader.Read();
-                              
+
                 //만약 체크 상태인 경우 체크를 해제하고 체크 상태가 아니면 체크한다.
                 if (todoReader["checkTodo"].ToString() == "1")
                 {
@@ -164,9 +175,13 @@ namespace Todo1
                 //쿼리문 실행
                 command = new MySqlCommand(updateQuery, connection);
                 command.ExecuteNonQuery();
-                
-            
+
+
                 RefreshToDoList();
+            }
+            else
+            {
+                MessageBox.Show("다른 사람의 todo list를 수정할 수 없습니다!");
             }
         }
 
@@ -180,6 +195,7 @@ namespace Todo1
         private void meButton_Click(object sender, EventArgs e)
         {
             selectedId = myId;
+            RefreshToDoList();
         }
 
         private void chatButton_Click(object sender, EventArgs e)
@@ -187,11 +203,6 @@ namespace Todo1
 
         }
 
-        //보고 싶은 todolist의 사람의 이름을 선택하기 위한 combobox
-        private void cmbSelectName_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void todoListBox_DrawItem(object sender, DrawItemEventArgs e)
         {
@@ -217,6 +228,17 @@ namespace Todo1
         private void todo_FormClosing(object sender, FormClosingEventArgs e)
         {
             connection.Close();
+        }
+
+        private void btn_Click(object sender, EventArgs e)
+        {
+            selectFriend selectFriendForm = new selectFriend(myId);
+            selectFriendForm.Owner = this;
+            //자식 폼으로부터 선택한 친구의 id 받는다. 이때 강제 종료된 경우를 제외하기 위해 if 문은 사용함
+            if(selectFriendForm.ShowDialog() == DialogResult.OK)
+            {
+                RefreshToDoList();
+            }
         }
     }
 

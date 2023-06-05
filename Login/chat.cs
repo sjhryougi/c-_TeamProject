@@ -42,7 +42,7 @@ namespace ChattingProgram
 
                 // 메시지 전송
                 timer.Stop();
-                string insertMessage = string.Format("INSERT IGNORE INTO chat (sender_id, receiver_id, content, time) VALUES ('{0}', '{1}', '{2}', '{3}');", myID, friendID, sendMessage, sendTime);
+                string insertMessage = string.Format("INSERT INTO chat (sender_id, receiver_id, content, time) VALUES ('{0}', '{1}', '{2}', '{3}');", myID, friendID, sendMessage, sendTime);
                 MySqlCommand command = new MySqlCommand(insertMessage, connection);
                 command.ExecuteNonQuery();
                 
@@ -122,7 +122,7 @@ namespace ChattingProgram
         {
             // 0.5초마다 갱신
             timer.Tick += new EventHandler(Timer_Tick);
-            //timer.Start();
+            timer.Start();
         }
 
         private void Timer_Tick(object sender, EventArgs e)
@@ -135,7 +135,7 @@ namespace ChattingProgram
             // 채팅창 갱신
             friendID = lstFriend.Items[lstFriend.FocusedItem.Index].SubItems[0].Text.ToString();
             // 채팅 로그 가져오기
-            string getChatList = string.Format("SELECT * FROM chat WHERE sender_id = '{0}' or sender_id = '{1}' ORDER BY time ASC;", myID, friendID);
+            string getChatList = string.Format("SELECT * FROM chat WHERE (sender_id = '{0}' and receiver_id = '{1}') or (sender_id = '{1}' and receiver_id = '{0}') ORDER BY time ASC;", myID, friendID);
             MySqlCommand command = new MySqlCommand(getChatList, connection);
             MySqlDataReader chatReader = command.ExecuteReader();
 

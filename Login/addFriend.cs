@@ -100,5 +100,11 @@ namespace Login
             }
             connection.Close();
         }
+
+        private void txtFriend_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+                btnAdd_Click(sender, e);
+        }
     }
 }

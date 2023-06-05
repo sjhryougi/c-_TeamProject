@@ -34,19 +34,22 @@
             // 
             // txtFriend
             // 
-            this.txtFriend.Location = new System.Drawing.Point(35, 68);
+            this.txtFriend.Location = new System.Drawing.Point(24, 45);
+            this.txtFriend.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.txtFriend.Multiline = true;
             this.txtFriend.Name = "txtFriend";
-            this.txtFriend.Size = new System.Drawing.Size(359, 36);
+            this.txtFriend.Size = new System.Drawing.Size(252, 25);
             this.txtFriend.TabIndex = 0;
             this.txtFriend.WordWrap = false;
             this.txtFriend.TextChanged += new System.EventHandler(this.txtFriend_TextChanged);
+            this.txtFriend.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFriend_KeyDown);
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(431, 68);
+            this.btnAdd.Location = new System.Drawing.Point(302, 45);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnAdd.Name = "btnAdd";
-            this.btnAdd.Size = new System.Drawing.Size(93, 36);
+            this.btnAdd.Size = new System.Drawing.Size(65, 24);
             this.btnAdd.TabIndex = 1;
             this.btnAdd.Text = "add";
             this.btnAdd.UseVisualStyleBackColor = true;
@@ -54,11 +57,12 @@
             // 
             // addFriend
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(555, 162);
+            this.ClientSize = new System.Drawing.Size(388, 108);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.txtFriend);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "addFriend";
             this.Text = "친구 추가";
             this.ResumeLayout(false);

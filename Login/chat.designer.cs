@@ -36,8 +36,10 @@
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.lstFriend = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnImage = new System.Windows.Forms.Button();
+            this.btnSetting = new System.Windows.Forms.Button();
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
+            this.lbFriendList = new System.Windows.Forms.Label();
+            this.lbChatFriend = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txtAll
@@ -96,17 +98,18 @@
             // 
             this.columnHeader1.Width = 100;
             // 
-            // btnImage
+            // btnSetting
             // 
-            this.btnImage.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.btnImage.ImageIndex = 0;
-            this.btnImage.ImageList = this.imageList2;
-            this.btnImage.Location = new System.Drawing.Point(12, 415);
-            this.btnImage.Name = "btnImage";
-            this.btnImage.Size = new System.Drawing.Size(151, 28);
-            this.btnImage.TabIndex = 6;
-            this.btnImage.UseVisualStyleBackColor = true;
+            this.btnSetting.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.btnSetting.ImageIndex = 0;
+            this.btnSetting.ImageList = this.imageList2;
+            this.btnSetting.Location = new System.Drawing.Point(12, 412);
+            this.btnSetting.Name = "btnSetting";
+            this.btnSetting.Size = new System.Drawing.Size(151, 28);
+            this.btnSetting.TabIndex = 6;
+            this.btnSetting.UseVisualStyleBackColor = true;
+            this.btnSetting.Click += new System.EventHandler(this.btnSetting_Click);
             // 
             // imageList2
             // 
@@ -114,12 +117,32 @@
             this.imageList2.TransparentColor = System.Drawing.Color.Transparent;
             this.imageList2.Images.SetKeyName(0, "2.png");
             // 
+            // lbFriendList
+            // 
+            this.lbFriendList.AutoSize = true;
+            this.lbFriendList.Location = new System.Drawing.Point(12, 9);
+            this.lbFriendList.Name = "lbFriendList";
+            this.lbFriendList.Size = new System.Drawing.Size(57, 12);
+            this.lbFriendList.TabIndex = 7;
+            this.lbFriendList.Text = "친구 목록";
+            // 
+            // lbChatFriend
+            // 
+            this.lbChatFriend.AutoSize = true;
+            this.lbChatFriend.Location = new System.Drawing.Point(167, 9);
+            this.lbChatFriend.Name = "lbChatFriend";
+            this.lbChatFriend.Size = new System.Drawing.Size(69, 12);
+            this.lbChatFriend.TabIndex = 8;
+            this.lbChatFriend.Text = "채팅 상대 : ";
+            // 
             // chat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.btnImage);
+            this.Controls.Add(this.lbChatFriend);
+            this.Controls.Add(this.lbFriendList);
+            this.Controls.Add(this.btnSetting);
             this.Controls.Add(this.lstFriend);
             this.Controls.Add(this.btnSend);
             this.Controls.Add(this.txtSend);
@@ -141,8 +164,10 @@
         private System.Windows.Forms.ImageList imageList1;
         private System.Windows.Forms.ListView lstFriend;
         private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.Button btnImage;
+        private System.Windows.Forms.Button btnSetting;
         private System.Windows.Forms.ImageList imageList2;
+        private System.Windows.Forms.Label lbFriendList;
+        private System.Windows.Forms.Label lbChatFriend;
     }
 }
 

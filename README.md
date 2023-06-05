@@ -32,7 +32,7 @@ receiver_id - 받는 사람의 id (varchar(15))
 
 content - 채팅 내용 (TEXT)
 
-time - 채팅을 보낸 시간 (DATE)
+time - 채팅을 보낸 시간 (DATETIME)
 ### friend
 친구 데이터를 기록한 테이블
 

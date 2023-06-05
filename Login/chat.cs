@@ -32,7 +32,7 @@ namespace ChattingProgram
             if(txtSend.Text != "")
             {
                 string sendMessage = txtSend.Text;
-                string sendTime = DateTime.Now.ToString("yyyy-MM-dd");
+                string sendTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                 // 메시지 전송
                 try

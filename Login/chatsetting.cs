@@ -23,7 +23,7 @@ namespace Login
         {
             if(fontDialog1.ShowDialog() == DialogResult.OK)
             {
-                ((chat)(this.Owner)).txtAll.Font = fontDialog1.Font;
+                ((chat)(this.Owner)).txtFont = fontDialog1.Font;
             }
         }
 

@@ -21,6 +21,9 @@ namespace ChattingProgram
 
         string myID;
         public string friendID;
+        internal Font txtFont;
+        internal Color mynameColor;
+        internal Color myfriendColor;
 
         Timer timer = new Timer();
 
@@ -51,21 +54,6 @@ namespace ChattingProgram
                 chatRefresh();
             }
         }
-
-        /*private static DateTime Delay(int MS)
-        {
-            DateTime ThisMoment = DateTime.Now;
-            TimeSpan duration = new TimeSpan(0, 0, 0, 0, MS);
-            DateTime AfterWards = ThisMoment.Add(duration);
-
-            while (AfterWards >= ThisMoment)
-            {
-                System.Windows.Forms.Application.DoEvents();
-                ThisMoment = DateTime.Now;
-            }
-
-            return DateTime.Now;
-        }*/
 
         private void btnSend_Click(object sender, EventArgs e)
         {
@@ -148,16 +136,20 @@ namespace ChattingProgram
                     // 내가 보낸 메시지인 경우
                     if (chatReader["sender_id"].ToString() == myID)
                     {
-                        txtAll.SelectionColor = Color.Red;
-                        txtAll.AppendText(myID + ">>" + chatReader["content"].ToString() + "\n");
+                        txtAll.SelectionColor = mynameColor;
+                        txtAll.AppendText(myID);
+                        txtAll.SelectionColor = Color.Black;
+                        txtAll.AppendText(">>" + chatReader["content"].ToString() + "\n");
                         txtAll.SelectionColor = Color.Gray;
                         txtAll.AppendText(chatReader["time"].ToString() + "\n");
                     }
                     // 받은 메시지인 경우
                     else
                     {
-                        txtAll.SelectionColor = Color.Red;
-                        txtAll.AppendText(friendID + ">>" + chatReader["content"].ToString() + "\n");
+                        txtAll.SelectionColor = myfriendColor;
+                        txtAll.AppendText(friendID);
+                        txtAll.SelectionColor = Color.Black;
+                        txtAll.AppendText(">>" + chatReader["content"].ToString() + "\n");
                         txtAll.SelectionColor = Color.Gray;
                         txtAll.AppendText(chatReader["time"].ToString() + "\n");
                     }
@@ -174,7 +166,9 @@ namespace ChattingProgram
 
         private void btnSetting_Click(object sender, EventArgs e)
         {
-            
+            chatsetting chatsettingForm = new chatsetting();
+            chatsettingForm.Owner = this;
+            chatsettingForm.ShowDialog();
         }
     }
 }

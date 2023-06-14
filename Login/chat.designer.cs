@@ -157,8 +157,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox txtAll;
         private System.Windows.Forms.TextBox txtSend;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.ImageList imageList1;
@@ -168,6 +166,7 @@
         private System.Windows.Forms.ImageList imageList2;
         private System.Windows.Forms.Label lbFriendList;
         private System.Windows.Forms.Label lbChatFriend;
+        internal System.Windows.Forms.RichTextBox txtAll;
     }
 }
 

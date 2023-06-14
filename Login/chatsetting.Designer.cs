@@ -108,7 +108,7 @@
             this.Controls.Add(this.lbMyClr);
             this.Controls.Add(this.lbFont);
             this.Name = "chatsetting";
-            this.Text = "chatsetting";
+            this.Text = "Setting";
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -2,3 +2,6 @@ vs/
 bin/
 obj/
 *.sln
+TodoList.exe.config
+TodoList.pdb
+README.md

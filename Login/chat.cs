@@ -132,35 +132,36 @@ namespace ChattingProgram
             {
                 txtAll.Font = txtFont;
                 Clear();
-                while (chatReader.Read())
-                {
+            }
+            while (chatReader.Read())
+            {
 
-                    if (!txtAll.Text.Contains(chatReader["time"].ToString()))
+                if (!txtAll.Text.Contains(chatReader["time"].ToString()))
+                {
+                    // 내가 보낸 메시지인 경우
+                    if (chatReader["sender_id"].ToString() == myID)
                     {
-                        // 내가 보낸 메시지인 경우
-                        if (chatReader["sender_id"].ToString() == myID)
-                        {
-                            txtAll.SelectionColor = mynameColor;
-                            txtAll.AppendText(myID);
-                            txtAll.SelectionColor = Color.Black;
-                            txtAll.AppendText(">>" + chatReader["content"].ToString() + "\n");
-                            txtAll.SelectionColor = Color.Gray;
-                            txtAll.AppendText(chatReader["time"].ToString() + "\n");
-                        }
-                        // 받은 메시지인 경우
-                        else
-                        {
-                            txtAll.SelectionColor = myfriendColor;
-                            txtAll.AppendText(friendID);
-                            txtAll.SelectionColor = Color.Black;
-                            txtAll.AppendText(">>" + chatReader["content"].ToString() + "\n");
-                            txtAll.SelectionColor = Color.Gray;
-                            txtAll.AppendText(chatReader["time"].ToString() + "\n");
-                        }
+                        txtAll.SelectionColor = mynameColor;
+                        txtAll.AppendText(myID);
+                        txtAll.SelectionColor = Color.Black;
+                        txtAll.AppendText(">>" + chatReader["content"].ToString() + "\n");
+                        txtAll.SelectionColor = Color.Gray;
+                        txtAll.AppendText(chatReader["time"].ToString() + "\n");
                     }
+                    // 받은 메시지인 경우
+                    else
+                    {
+                        txtAll.SelectionColor = myfriendColor;
+                        txtAll.AppendText(friendID);
+                        txtAll.SelectionColor = Color.Black;
+                        txtAll.AppendText(">>" + chatReader["content"].ToString() + "\n");
+                        txtAll.SelectionColor = Color.Gray;
+                        txtAll.AppendText(chatReader["time"].ToString() + "\n");
+                    }
+                    txtAll.ScrollToCaret();
                 }
             }
-            
+
             chatReader.Close();
         }
 
